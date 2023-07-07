@@ -26,6 +26,10 @@ const routes: Routes = [
   {
     path: 'inicio',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'plantas',
+    loadChildren: () => import('./pages/plantas/plantas.module').then( m => m.PlantasPageModule)
   }
   //,
   // {
