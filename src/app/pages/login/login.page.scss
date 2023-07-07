@@ -2,46 +2,30 @@ ion-content{
     --ion-background-color:#E1EAF9 !important;
 }
 
-
 ion-toolbar{
     --ion-background-color:transparent;
     --opacity:0;
 }
-.signin-button{
-    margin-top: 35px;
-    text-align: center;
-}
-
-.login-button{
-    margin-top: 35px;
-    --ion-color-primary:#2134b7;
-    text-align: center;
-}
-.text-tag{
-    margin-top: 55px;
-    text-align: center;
-    span{
-        font-size: 13px;
-        font-weight: normal;
-        color:mediumslateblue;
+.gradient-custom-2 {
+    /* fallback for old browsers */
+    //background: #fccb90;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, #1d91fd, #71fac1, #76fc76, #3be249);
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, #1d91fd, #71fac1, #76fc76, #3be249);
     }
-}
-.social-buttons{
-    text-align: center;
-    ion-button{
-        width: 40px;
-        padding-left: 5px !important;
+    
+    @media (min-width: 768px) {
+    .gradient-form {
+    //height: 100vh !important;
     }
-}
-ion-list{
-    display: flex;
-    align-content: center;
-    padding-left: 50%;
-    padding-right: 50%;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-items: baseline;
-  }
-ion-header{
-    color: transparent;
-}
+    }
+    @media (min-width: 769px) {
+    .gradient-custom-2 {
+    border-top-right-radius: .3rem;
+    border-bottom-right-radius: .3rem;
+    }
+    }
+    

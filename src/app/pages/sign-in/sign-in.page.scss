@@ -1,3 +1,32 @@
-ion-list{
-    display: flex;
+\ion-content{
+    --ion-background-color:#E1EAF9 !important;
 }
+
+ion-toolbar{
+    --ion-background-color:transparent;
+    --opacity:0;
+}
+.gradient-custom-2 {
+    /* fallback for old browsers */
+    //background: #fccb90;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, #1d91fd, #71fac1, #76fc76, #3be249);
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, #1d91fd, #71fac1, #76fc76, #3be249);
+    }
+    
+    @media (min-width: 768px) {
+    .gradient-form {
+    //height: 100vh !important;
+    }
+    }
+    @media (min-width: 769px) {
+    .gradient-custom-2 {
+    border-top-right-radius: .3rem;
+    border-bottom-right-radius: .3rem;
+
+    }
+    }
+    
