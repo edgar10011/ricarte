@@ -1,42 +1,38 @@
-const express = require('express');
-const router = express.Router();
-const User = require('../models/userModel');
+const mongoose = require ('mongoose');
+const bcrypt = require ('bcrypt');
 
-// Ruta para obtener todos los usuarios
-router.get('/users', (req, res) => {
-  // Realizar una consulta a la base de datos para obtener todos los usuarios
-  User.find({})
-    .then((users) => {
-      // Enviar la lista de usuarios como respuesta en formato JSON
-      res.json(users);
-    })
-    .catch((err) => {
-      console.error('Error al obtener usuarios:', err);
-      res.status(500).json({ error: 'Error al obtener usuarios' });
-    });
+const saltRounds= 10;
+
+const userSchema = new mongoose.Schema({
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true }
 });
 
-// Ruta para crear un nuevo usuario
-router.post('/users', (req, res) => {
-  // Obtener los datos enviados en el cuerpo de la solicitud
-  const { name, email, age } = req.body;
+userSchema.pre('save', function(next){
+    if (this.isNew || this.isModified('password')){
+        const document = this;
 
-  // Crear un nuevo documento de usuario utilizando el modelo User
-  const newUser = new User({ name, email, age });
-
-  // Guardar el nuevo usuario en la base de datos
-  newUser
-    .save()
-    .then((user) => {
-      // Enviar el usuario recién creado como respuesta en formato JSON
-      res.json(user);
-    })
-    .catch((err) => {
-      console.error('Error al crear un nuevo usuario:', err);
-      res.status(500).json({ error: 'Error al crear un nuevo usuario' });
-    });
+        bcrypt.hash(document.password, saltRounds, (error, hashedPassword) => {
+            if (error){
+                next (error);
+            }else{
+                document.password = hashedPassword;
+                next();
+            }
+        });
+    }else{
+        next();
+    }
 });
 
-// Otras rutas y métodos aquí...
+userSchema.methods.isCorrectPassword = function(candidatePassword, callback){
+    bcrypt.compare(password, this.password, function(error, same){
+        if (error){
+            callback(error);
+        } else{
+            callback(error, same);
+        }
+    });
+}
 
-module.exports = router;
+module.exports = mongoose.model('User', userSchema);

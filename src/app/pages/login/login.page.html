@@ -22,9 +22,26 @@
 
                 </div>
 
-                <form>
+                <form action="/authenticate" method="POST">
 
-                  <div class="form-outline mb-4">
+                  <!--registro feo para probar botones-->
+
+                    <div class="section">
+                      <div class="title">username</div>
+                      <div class="field"><input type="text" id="username" name="username"> </div>
+                    </div>
+
+                    <div class="section">
+                      <div class="title">password</div>
+                      <div class="field"><input type="password" id="password" name="password"> </div>
+                    </div>
+
+                    <div class="section">
+                      <div class="button"><input type="submit" value="Login"></div>
+                      <div class="button"><a href="../login/login.page.html"> login</a></div>
+                    </div>
+
+                  <!-- <div class="form-outline mb-4">
                     <label class="form-label" for="form2Example11">Usuario</label>
 
                     <input type="email" id="form2Example11" class="form-control"
@@ -34,7 +51,7 @@
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form2Example22">Contraseña</label>
                     <input type="password" id="form2Example22" class="form-control" />
-                  </div>
+                  </div> -->
 
                   <div class="text-center pt-1 mb-5 pb-1">
                     <button class="btn btn-primary btn-block fa-lg mb-3" type="button" routerLink="/plantas">Iniciar</button>
