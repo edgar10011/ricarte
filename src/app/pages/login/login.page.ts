@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+
+interface LoginResponse {
+  success: boolean;
+}
 
 @Component({
   selector: 'app-login',
@@ -7,23 +12,33 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
-  username!: string;
-  password!: string;
+  username: string = '';
+  password: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) { }
 
-  login() {
-    if (this.username && this.password) {
-      // Aquí puedes agregar la lógica para verificar las credenciales del usuario
-      // y realizar las acciones necesarias, como enviar la solicitud al servidor
-      // o verificar los datos en una base de datos.
+  authenticate() {
+    console.log('Cargando inicio');
+    const data = {
+      username: this.username,
+      password: this.password,
+    };
 
-      // Ejemplo básico de redirección después del inicio de sesión exitoso
-      if (this.username === 'usuario' && this.password === 'contraseña') {
-        this.router.navigate(['/dashboard']);
-      } else {
-        // Mostrar mensaje de error, las credenciales no son válidas
+    this.http.post<LoginResponse>('http://localhost:3004/authenticate', data).subscribe(
+      (response) => {
+        console.log('Respuesta del servidor: ', response);
+        if (response.success) {
+          console.log('Inicio de sesión exitoso');
+          this.router.navigate(['/plantas']); // Reemplaza 'plantas' con la ruta correcta para la página de plantas
+        } else {
+          console.log('Credenciales incorrectas');
+        }
+      },
+      (error) => {
+        console.error('Error en la solicitud:', error);
+        console.log('Hubo un error durante el inicio de sesión.');
+        // Agregar lógica para mostrar mensaje de error al usuario, por ejemplo, con un Toast o un mensaje en la interfaz de usuario.
       }
-    }
+    );
   }
 }

@@ -22,51 +22,22 @@
 
                 </div>
 
-                <form action="/authenticate" method="POST">
+               <!-- login.page.html -->
+        <form>
+          <div class="section">
+            <div class="title">username</div>
+            <div class="field"><input type="text" [(ngModel)]="username" name="username"> </div>
+          </div>
 
-                  <!--registro feo para probar botones-->
+          <div class="section">
+            <div class="title">password</div>
+            <div class="field"><input type="password" [(ngModel)]="password" name="password"> </div>
+          </div>
 
-                    <div class="section">
-                      <div class="title">username</div>
-                      <div class="field"><input type="text" id="username" name="username"> </div>
-                    </div>
-
-                    <div class="section">
-                      <div class="title">password</div>
-                      <div class="field"><input type="password" id="password" name="password"> </div>
-                    </div>
-
-                    <div class="section">
-                      <div class="button"><input type="submit" value="Login"></div>
-                      <div class="button"><a href="../login/login.page.html"> login</a></div>
-                    </div>
-
-                  <!-- <div class="form-outline mb-4">
-                    <label class="form-label" for="form2Example11">Usuario</label>
-
-                    <input type="email" id="form2Example11" class="form-control"
-                    />
-                  </div>
-
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="form2Example22">Contraseña</label>
-                    <input type="password" id="form2Example22" class="form-control" />
-                  </div> -->
-
-                  <div class="text-center pt-1 mb-5 pb-1">
-                    <button class="btn btn-primary btn-block fa-lg mb-3" type="button" routerLink="/plantas">Iniciar</button>
-                    <br>
-                    <a class="text-muted" href="/recovery" >¿Olvidaste tu contraseña?</a>
-                  </div>
-
-                  <div class="d-flex align-items-center justify-content-center pb-4">
-                    <p class="mb-0 me-2" routerLink=
-                    "/sign-in">¿No tienes una cuenta? <b>Regístrate ahora</b>
-                    </p>
-                </div>
-
-                </form>
-
+          <div class="section">
+            <div class="button" (click)="authenticate()"> iniciar</div>
+          </div>
+        </form>
               </div>
             </div>
           </div>

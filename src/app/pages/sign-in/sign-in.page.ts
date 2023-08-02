@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-sign-in',
@@ -7,18 +9,26 @@ import { Router } from '@angular/router';
   styleUrls: ['./sign-in.page.scss'],
 })
 export class SignInPage {
-  username!: string;
-  password!: string;
-
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) { }
+  //user: { username: string; password: string } = { username: '', password: '' };
+  username: string = '';
+  password: string = '';
 
   register() {
-    if (this.username && this.password) {
-      // Aquí puedes agregar la lógica para procesar el registro,
-      // como enviar los datos al servidor o guardarlos en una base de datos.
+    console.log('Cargando registro');
+    const data = {
+      username: this.username,
+      password: this.password,
+    };
 
-      // Ejemplo básico de redirección después del registro exitoso
-      this.router.navigate(['/dashboard']);
-    }
+    this.http.post('http://localhost:3004/register', data).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+    this.router.navigate(['../login'])
   }
 }

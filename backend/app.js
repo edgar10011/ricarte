@@ -4,6 +4,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const User = require('../backend/routes/users');
+const cors = require('cors');
+
 
 const mongoose = require('mongoose');
 
@@ -12,6 +14,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'src')));
+
+app.use(cors());
+
 
 const MONGODB_URI = 'mongodb://localhost:27017/Integradora';
 

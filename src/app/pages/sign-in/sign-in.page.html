@@ -25,17 +25,17 @@
                     <div class="form-outline mb-4">
                       <label class="form-label" for="form2Example11">Usuario</label>
   
-                      <input type="email" id="form2Example11" class="form-control"
+                      <input type="email" [(ngModel)]="username" id="form2Example11" class="form-control" name="usernamepage"
                       />
                     </div>
   
                     <div class="form-outline mb-4">
                       <label class="form-label" for="form2Example22">Contraseña</label>
-                      <input type="password" id="form2Example22" class="form-control" />
+                      <input type="password" [(ngModel)]="password" id="form2Example22" class="form-control" name="password"/>
                     </div>
   
                     <div class="text-center pt-1 mb-5 pb-1">
-                      <button class="btn btn-primary btn-block fa-lg mb-3" type="button">Registrar</button>
+                      <button class="btn btn-primary btn-block fa-lg mb-3" type="button" (click)="register()">Registrar</button>
                       <br>
                     </div>
   
