@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SignInPage {
   constructor(private router: Router, private http: HttpClient) { }
-  //user: { username: string; password: string } = { username: '', password: '' };
+  user: { username: string; password: string } = { username: '', password: '' };
   username: string = '';
   password: string = '';
 

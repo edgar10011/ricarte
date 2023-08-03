@@ -10,13 +10,12 @@ export class LoaderService {
 
   showLoaderAndRedirectToLogin() {
     const delay = 3000; // 5 segundos
-
     setTimeout(() => {
       // Ocultar el spinner después de 5 segundos
       // Aquí puedes implementar tu lógica para ocultar el spinner
 
       // Redirigir a la página de login
-      this.router.navigate(['../pages/home']);
+      this.router.navigate(['../home']);
     }, delay);
   }
 }

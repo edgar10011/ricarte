@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 interface LoginResponse {
   success: boolean;
+  message: string;
 }
 
 @Component({
@@ -12,40 +13,37 @@ interface LoginResponse {
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
-  username: string = '';
-  password: string = '';
+  usuario = {
+    username: '',
+    password: '',
+  };
 
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private router: Router, private http: HttpClient) {}
 
   authenticate() {
-    if (!this.username || !this.password) {
-      console.log('Ingresa un nombre de usuario y contraseña válidos.');
-      // Agregar lógica para mostrar un mensaje de error al usuario, por ejemplo, con un Toast o un mensaje en la interfaz de usuario.
-      return;
-    }
-
     console.log('Cargando inicio');
     const data = {
-      username: this.username,
-      password: this.password,
+      username: this.usuario.username,
+      password: this.usuario.password,
     };
 
-    this.http.post('http://localhost:3004/authenticate', data).subscribe(
+    this.http.post<LoginResponse>('http://localhost:3004/login', data).subscribe(
       (response) => {
-        console.log('Respuesta del servidor: ', response);
-        if (response) {
-          console.log('Inicio de sesión exitoso');
-          this.router.navigate(['../plantas']); // Reemplaza 'plantas' con la ruta correcta para la página de plantas
+        console.log('Respuesta del servidor:', response);
+        if (response.success) {
+          console.log('Inicio de sesión con éxito');
+          // Aquí puedes redirigir al usuario a la página de inicio de sesión exitosa o mostrar un mensaje.
+          this.router.navigate(['/plantas']);
         } else {
-          console.log('Credenciales incorrectas');
-          // Agregar lógica para mostrar un mensaje de error al usuario, por ejemplo, con un Toast o un mensaje en la interfaz de usuario.
+          console.log('Usuario y/o contraseña incorrecta');
+          // Aquí puedes mostrar un mensaje de error al usuario.
         }
       },
       (error) => {
         console.error('Error en la solicitud:', error);
-        console.log('Hubo un error durante el inicio de sesión.');
-        // Agregar lógica para mostrar un mensaje de error al usuario, por ejemplo, con un Toast o un mensaje en la interfaz de usuario.
+        // Aquí puedes mostrar un mensaje de error al usuario.
       }
     );
   }
 }
+

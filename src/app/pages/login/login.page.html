@@ -22,22 +22,21 @@
 
                 </div>
 
-               <!-- login.page.html -->
-        <form>
+        <form (ngSubmit)="authenticate()">
       
           <div class="form-outline mb-4">
             <label class="form-label" for="form2Example11">Usuario</label>
-            <input type="text" [(ngModel)]="username" id="form2Example11" class="form-control" name="usernamepage"
-            />
+            <input type="text" [(ngModel)]="usuario.username" class="form-control" name="username">
           </div>
 
           <div class="form-outline mb-4">
             <label class="form-label" for="form2Example22">Contraseña</label>
-            <input type="password" [(ngModel)]="password" id="form2Example22" class="form-control" name="password"/>
+            <input type="password" [(ngModel)]="usuario.password" class="form-control" name="password">
+
           </div>
 
           <div class="text-center pt-1 mb-5 pb-1">
-            <button class="btn btn-primary btn-block fa-lg mb-3" type="button" (click)="authenticate()">Iniciar</button>
+            <button class="btn btn-primary btn-block fa-lg mb-3" type="submit">Iniciar</button>
             <br>
           </div>
 
@@ -53,4 +52,5 @@
     </div>
   </div>
 </section>
-</ion-content>
+</ion-content> 
+
