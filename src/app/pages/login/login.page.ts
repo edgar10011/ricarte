@@ -21,7 +21,7 @@ export class LoginPage {
   constructor(private router: Router, private http: HttpClient) {}
 
   authenticate() {
-    console.log('Cargando inicio');
+    console.log('');
     const data = {
       username: this.usuario.username,
       password: this.usuario.password,
@@ -45,5 +45,6 @@ export class LoginPage {
       }
     );
   }
+  
 }
 

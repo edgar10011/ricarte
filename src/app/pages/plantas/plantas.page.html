@@ -3,6 +3,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-button (click)="logout()" color="tertiary" class="logoutB" id="close-toast">Salir</ion-button>
+  <ion-toast trigger="close-toast" message="Sesión cerrada" [duration]="3000"></ion-toast>
+
+
   <ion-card>
     <img alt="Silhouette of mountains" src="https://cdn03.lolaflora.com/bonnygift/kcm44668812-1/XL/arbol-de-la-abundancia-en-maceta-de-ceramica-kcm44668812-1-49702cc999cd4cbd9d6f5ebd66d49f4e.jpg" />
     <ion-card-header>

@@ -60,7 +60,10 @@ app.post('/login', async (req, res) => {
     if (isAuthenticated) {
       res.status(200).json({ success: true, message: 'Inicio de sesión exitoso' });
     } else {
+      //console.log(`Usuario o contraseña incorrecta`);
+
       res.status(401).json({ success: false, message: 'Usuario y/o contraseña incorrecta' });
+
     }
   } catch (error) {
     res.status(500).send('Error en el inicio de sesión');
