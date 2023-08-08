@@ -5,11 +5,14 @@ const bcrypt = require('bcrypt');
 const cors = require('cors');
 
 const app = express();
-const port = 3004;
+const port = 3007;
 
 // Conectar a la base de datos MongoDB
+//mongoose.connect('mongodb://localhost:27017/Integradora', {
+
 mongoose.connect('mongodb://localhost:27017/Integradora', {
-  useNewUrlParser: true,
+
+useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
@@ -17,6 +20,24 @@ const User = mongoose.model('User', {
   username: String,
   password: String,
 });
+
+// const plantitaSchema = new mongoose.Schema({
+//   imagen: String,
+//   titulo: String,
+//   humedad: Number,
+// });
+
+const PlantitaSchema = new mongoose.Schema({
+  imagen: String,
+  titulo: String,
+  humedad: Number,
+});
+
+
+// const plantita = mongoose.model('plantita', plantitaSchema);
+
+const PlantitaModel = mongoose.model('Plantita', PlantitaSchema);
+
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -58,17 +79,38 @@ app.post('/login', async (req, res) => {
     const isAuthenticated = await authenticateUser(username, password);
 
     if (isAuthenticated) {
+      //res.status(200).send({ success: true, message: 'Inicio de sesión exitoso' });
       res.status(200).json({ success: true, message: 'Inicio de sesión exitoso' });
+
     } else {
-      //console.log(`Usuario o contraseña incorrecta`);
-
       res.status(401).json({ success: false, message: 'Usuario y/o contraseña incorrecta' });
-
     }
   } catch (error) {
     res.status(500).send('Error en el inicio de sesión');
   }
 });
+
+// Ruta para obtener las plantas
+app.get('/obtenerPlantas', async (req, res) => {
+  try {
+    const plantas = await plantita.find({});
+    res.status(200).json({ success: true, data: plantas });
+
+  } catch (error) {
+    res.status(500).send({ success: false, message: 'Error al obtener plantas' });
+  }
+});
+
+app.get('/Integradora/plantitas', async (req, res) => {
+  try {
+    const plantitas = await PlantitaModel.find();
+    res.json(plantitas);
+  } catch (error) {
+    console.error('Error al obtener plantitas:', error);
+    res.status(500).json({ error: 'Error al obtener plantitas' });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Servidor en ejecución en http://localhost:${port}`);

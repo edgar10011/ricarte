@@ -21,7 +21,7 @@ export class SignInPage {
       password: this.password,
     };
 
-    this.http.post('http://localhost:3004/register', data).subscribe(
+    this.http.post('http://localhost:3007/register', data).subscribe(
       (response) => {
         console.log(response);
       },
