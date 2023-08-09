@@ -1,55 +1,16 @@
-// import { Component, OnInit } from '@angular/core';
-// import { Router } from '@angular/router';
-// import { AuthService } from '../../services/authService';
-// import { HttpClient } from '@angular/common/http';
-
-
-
-// @Component({
-//   selector: 'app-plantas',
-//   templateUrl: './plantas.page.html',
-//   styleUrls: ['./plantas.page.scss'],
-// })
-// export class PlantasPage {
-
-//   constructor(private router: Router, private authService: AuthService, private http: HttpClient) { }
-//   logout() {
-//     // Aquí iría la lógica para cerrar la sesión, por ejemplo, borrar los datos del usuario en el almacenamiento local o en el servicio de autenticación.
-//     // Luego, redirigir al usuario a la página de inicio de sesión.
-//     this.authService.logout();
-//     console.log('Sesión cerrada')
-//     // Ejemplo de redirección a la página de inicio de sesión:
-//     this.router.navigate(['/login']);
-//   }
-
-//   obtenerPlantas() {
-//     this.http.get('mongodb://localhost:27017/Integradora').subscribe(
-//       (data) => {
-//         // Aquí puedes procesar los datos recibidos de la base de datos
-//         console.log(data);
-//       },
-//       (error) => {
-//         console.error('Error al obtener datos de la base de datos:', error);
-//       }
-//     );
-  
-//   }
-//   ngOnInit() {
-//     this.obtenerPlantas();
-//   }
-  
-  
-// }
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/authService';
+import { IonModal } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+import { OverlayEventDetail } from '@ionic/core/components';
 
 interface Plantita {
   imagen: string;
   titulo: string;
   humedad: number;
 }
+
 
 @Component({
   selector: 'app-plantas',
@@ -62,12 +23,13 @@ export class PlantasPage implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private http: HttpClient  
+    private http: HttpClient, 
   ) {}
 
   ngOnInit() {
     this.obtenerPlantas();
   }
+
 
   logout() {
     this.authService.logout();
@@ -90,9 +52,26 @@ export class PlantasPage implements OnInit {
     );
   }
 
-  // trackByFn(index: number, item: Plantita): string {
-  //   return item.titulo; // Puedes utilizar el campo único que prefieras aquí
-  
-  // }
 
 }
+// export class ExampleComponent {
+//   @ViewChild(IonModal) modal: IonModal;
+
+//   message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
+//   name: string;
+
+//   cancel() {
+//     this.modal.dismiss(null, 'cancel');
+//   }
+
+//   confirm() {
+//     this.modal.dismiss(this.name, 'confirm');
+//   }
+
+//   onWillDismiss(event: Event) {
+//     const ev = event as CustomEvent<OverlayEventDetail<string>>;
+//     if (ev.detail.role === 'confirm') {
+//       this.message = `Hello, ${ev.detail.data}!`;
+//     }
+//   }
+// }

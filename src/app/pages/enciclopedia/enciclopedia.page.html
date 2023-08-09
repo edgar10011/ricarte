@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Enciclopedia
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- <ion-button (click)="logout()" color="tertiary" class="logoutB" id="close-toast">Salir</ion-button>
+      <ion-button routerLink="/plantas"  color="tertiary" class="logoutB" id="close-toast">Plantas</ion-button> -->
+  <ion-toast trigger="close-toast" message="Sesión cerrada" [duration]="3000"></ion-toast>
+  <h1>Enciclopedia de plantas</h1>
+
+  <h2>Arbol de la abundancia</h2>
+  <img alt="rhino standing near grass"
+    src="https://cdn03.lolaflora.com/bonnygift/kcm44668812-1/XL/arbol-de-la-abundancia-en-maceta-de-ceramica-kcm44668812-1-49702cc999cd4cbd9d6f5ebd66d49f4e.jpg" />
+  <p>
+    Descripción. La portulacaria afra es una suculenta siempreverde originaria de Sudáfrica.
+    Allí, crece de manera salvaje y sus hojas carnosas son un manjar para elefantes, cabras y rinocerontes.
+    Es una planta “4×4”, ideal para tener en casa por su resiliencia, su fuerza y su facilidad de cultivo.
+  </p>
+
+  <h2>Suculenta</h2>
+  <img alt="brown sea turtle in water"
+    src="https://verdecora.es/blog/wp-content/uploads/2016/01/shutterstock_295962566-compressor-2.jpg" />
+  <p>
+    Las plantas suculentas ​ o crasas son aquellas en las que algún órgano está especializado en el almacenamiento de
+    agua en cantidades mayores que las plantas sin esta adaptación.
+    Estos órganos de reserva tienen una alta proporción de tejido parenquimático.​Sencillas y variadas, muy variadas.
+    El hecho de que ocupen poco espacio y que, además, pueden crecer en casi en cualquier sitio (ya sea en interior o en
+    exterior)
+    convierten a las suculentas en una apuesta genial para tener un pedacito de Naturaleza en casi cualquier espacio.
+  </p>
+
+  <h2>Bonsái</h2>
+  <img alt="giraffe sticking its tongue out"
+    src="https://mymodernmet.com/wp/wp-content/uploads/2021/02/bonsai-tree-history-1.jpg" />
+  <p>
+    El bonsái es una disciplina muy conocida. Consiste en cultivar árboles y arbustos en macetas y controlar sus
+    dimensiones por medio de técnicas como el trasplante,
+    la poda, el alambrado o el pinzado, de forma tal que se mantengan de un tamaño mucho menor al que alcanzarían en
+    circunstancias naturales.
+  </p>
+
+  <h2>Lengua de suegra</h2>
+  <img alt="two grey elephants on grass plains during sunset"
+    src="https://huerto-en-casa.com/wp-content/uploads/2022/04/planta-lengua-de-suegra-beneficios.jpg" />
+  <p>
+    Es una planta de bajo mantenimiento que se conoce por sobrevivir a las sequías, lo que la hace perfecta para los
+    novatos.
+    Aunque prefiere la luz brillante, puede sobrevivir a niveles de luz más bajos.
+  </p>
+
+  <h2>Monstera deliciosa</h2>
+  <img alt="black and white dolphin in water"
+    src="https://plantify.mx/wp-content/uploads/2022/04/Monstera-Deliciosa-Cuidados.jpg" />
+  <p>
+    Monstera deliciosa, llamada comúnmente cerimán o costilla de Adán, es una especie de planta trepadora de la familia
+    Araceae, endémica de selvas tropicales,
+    que se distribuye desde el centro y sur de México hasta el norte de Argentina.
+  </p>
+</ion-content>
+
+<ion-item>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button routerLink="/plantas">
+        <ion-icon name="leaf"></ion-icon>
+        Plantas
+      </ion-tab-button>
+      <ion-tab-button routerLink="/enciclopedia">
+        <ion-icon name="book"></ion-icon>
+        Enciclopedia
+      </ion-tab-button>
+      <ion-tab-button>
+        <ion-icon name="settings"></ion-icon>
+        <ion-toast trigger="close-toast" message="Sesión cerrada" [duration]="3000"></ion-toast>
+        Ajustes
+      </ion-tab-button>
+      <ion-tab-button (click)="logout()" color="tertiary" id="close-toast">
+        <ion-icon name="log-out"></ion-icon>
+        Salir
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-item>

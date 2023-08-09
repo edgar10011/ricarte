@@ -30,6 +30,10 @@ const routes: Routes = [
   {
     path: 'plantas',
     loadChildren: () => import('./pages/plantas/plantas.module').then( m => m.PlantasPageModule)
+  },
+  {
+    path: 'enciclopedia',
+    loadChildren: () => import('./pages/enciclopedia/enciclopedia.module').then( m => m.EnciclopediaPageModule)
   }
   //,
   // {

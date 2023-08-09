@@ -1,99 +1,61 @@
-<!-- <ion-header [translucent]="true">
-  
+<ion-header>  
+  <ion-toolbar>
+    <ion-title>
+      Lista de plantas
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-button (click)="logout()" color="tertiary" class="logoutB" id="close-toast">Salir</ion-button>
-  <ion-toast trigger="close-toast" message="Sesión cerrada" [duration]="3000"></ion-toast>
-
-   <ion-card>
-    <img alt="Silhouette of mountains" src="https://cdn03.lolaflora.com/bonnygift/kcm44668812-1/XL/arbol-de-la-abundancia-en-maceta-de-ceramica-kcm44668812-1-49702cc999cd4cbd9d6f5ebd66d49f4e.jpg" />
-    <ion-card-header>
-      <ion-card-title>Arbol de la abundancia</ion-card-title>
-      <ion-card-subtitle></ion-card-subtitle>
-    </ion-card-header>
+<!-- <ion-fab slot="fixed" vertical="top" description="danger" id="open-modal" expand="block" horizontal="end">
+  <ion-fab-button>
+    <ion-icon name="add"></ion-icon>
+    <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-button (click)="cancel()">Cancel</ion-button>
+            </ion-buttons>
+            <ion-title>Welcome</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <ion-item>
+            <ion-label position="stacked">Enter your name</ion-label>
+            <ion-input type="text" placeholder="Your name" [(ngModel)]="name"></ion-input>
+          </ion-item>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </ion-fab-button>
   
-    <ion-card-content>
-      Temperatura:
-    </ion-card-content>
-    <ion-card-content>
-      Humedad:
-    </ion-card-content>
-  </ion-card>
+  </ion-fab>
 
-  <ion-card>
-    <img alt="Silhouette of mountains" src="https://fontawesomeicons.com/images/svg/add.svg" />
-    <ion-card-header>
-      <ion-card-title>Agregar</ion-card-title>
-      <ion-card-subtitle></ion-card-subtitle>
-    </ion-card-header>
-  </ion-card>
-  
-</ion-content> 
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-
-  <!-<ion-content>
-    <ion-list *ngIf="planta.length > 0">
-      <ion-item *ngFor="let planta of plantas">
-        {{ planta.imagen }} - {{ planta.titulo }} - {{ planta.humedad }}
-      </ion-item>
-    </ion-list>
-    <div *ngIf="planta.length === 0">
-      No hay plantas disponibles.
-    </div>
-  </ion-content> -->
-
-  <!-- <ion-content>
-    <ion-list *ngIf="plantas.length > 0">
-      <ion-item *ngFor="let planta of plantas">
-        {{ plantas.imagen }} - {{ plantas.titulo }} - {{ plantas.humedad }}
-      </ion-item>
-    </ion-list>
-  </ion-content> -->
-
-
-  
-
-<!-- <ion-content>
-  <ion-list *ngIf="plantas.length > 0">
-    <ion-card *ngFor="let planta of plantas">
-      <ion-card-header>
-        {{ planta.titulo }}
-      </ion-card-header>
-      <ion-card-content>
-        <img src="planta.https://d3e3r3101xvs9k.cloudfront.net/ProductOriginalPhotos/Arbol_de_la_abundancia_en_maceta_verde_E.jpg">
-        <p>Humedad: {{ planta.humedad }}</p>
-      </ion-card-content>
-    </ion-card>
-  </ion-list>
-  <div *ngIf="plantas.length === 0">
-    No hay plantas disponibles.
-  </div>
-</ion-content> -->
-
-<ion-header>
-
-</ion-header>
-
-<ion-button (click)="logout()" color="tertiary" class="logoutB" id="close-toast">Salir</ion-button>
-<ion-toast trigger="close-toast" message="Sesión cerrada" [duration]="3000"></ion-toast>
-
-<!-- <ion-content>
-  <ion-list *ngIf="plantas.length > 0">
-     <ion-item *ngFor="let planta of plantas"> 
-      <ion-item *ngFor="let planta of plantas;">
-      <img [src]="planta.imagen" alt="Imagen de planta">
-      {{ planta.titulo }} - {{ planta.humedad }}
-       <ion-button (click)="obtenerPlantas()" type="submit">s </ion-button> 
-    </ion-item>    
-  </ion-list>
-  <div *ngIf="plantas.length === 0">
-    No hay plantas disponibles.
-  </div>
-</ion-content> -->
+  <ion-button id="open-modal" expand="block">Open</ion-button>
+  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>  
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Cancel</ion-button>
+          </ion-buttons>
+          <ion-title>Welcome</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label position="stacked">Enter your name</ion-label>
+          <ion-input type="text" placeholder="Your name" [(ngModel)]="name"></ion-input>
+        </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-modal> -->
 
 <ion-content>
   <ion-list *ngIf="plantas.length > 0">
@@ -113,4 +75,39 @@
 </ion-content>
 
 
+ 
+<ion-item>
 
+  
+
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button  routerLink="/plantas">
+      <ion-icon name="leaf"></ion-icon>
+      Plantas
+    </ion-tab-button>
+    <ion-tab-button routerLink="/enciclopedia">
+      <ion-icon name="book"></ion-icon>
+      Enciclopedia
+    </ion-tab-button>
+    <ion-tab-button >
+      <ion-icon name="settings"></ion-icon>
+      Ajustes
+    </ion-tab-button>
+    <ion-tab-button (click)="logout()" color="tertiary" id="close-toast">
+      <ion-icon name="log-out"></ion-icon>
+      <ion-toast trigger="close-toast" message="Sesión cerrada" [duration]="3000"></ion-toast>
+      Salir
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+</ion-item>
+
+
+
+
+
+<!-- <ion-tab-button tab="plantas" routerLink="plantas">
+  <ion-icon name="leaf"></ion-icon>
+  Plantas
+</ion-tab-button> -->
