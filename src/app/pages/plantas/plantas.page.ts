@@ -51,7 +51,7 @@ export class PlantasPage implements OnInit {
   }
 
   obtenerPlantas() {
-    this.http.get<Plantita[]>('http://localhost:3007/Integradora/plantitas').subscribe(
+    this.http.get<Plantita[]>('http://localhost:3007/obtenerPlantas').subscribe(
       (data) => {
         console.log(data); // Agrega este console.log() para verificar los datos recibidos
         this.plantas = data;
@@ -64,7 +64,7 @@ export class PlantasPage implements OnInit {
 
   async agregarPlanta(){
     try {
-      const url = 'http://localhost:3007/Integradora/agregarPlanta'; // Cambia esta URL según tu API
+      const url = 'http://localhost:3007/Integradora/plantitas'; // Cambia esta URL según tu API
       const response = await this.http.post(url, this.nuevaPlanta).toPromise();
 
       console.log('Planta agregada:', response);
