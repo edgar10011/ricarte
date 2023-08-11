@@ -1,4 +1,4 @@
-<ion-header>  
+<ion-header>
   <ion-toolbar>
     <ion-title>
       Lista de plantas
@@ -6,56 +6,14 @@
   </ion-toolbar>
 </ion-header>
 
-<!-- <ion-fab slot="fixed" vertical="top" description="danger" id="open-modal" expand="block" horizontal="end">
-  <ion-fab-button>
-    <ion-icon name="add"></ion-icon>
-    <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
-      <ng-template>
-        <ion-header>
-          <ion-toolbar>
-            <ion-buttons slot="start">
-              <ion-button (click)="cancel()">Cancel</ion-button>
-            </ion-buttons>
-            <ion-title>Welcome</ion-title>
-            <ion-buttons slot="end">
-              <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
-            </ion-buttons>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content class="ion-padding">
-          <ion-item>
-            <ion-label position="stacked">Enter your name</ion-label>
-            <ion-input type="text" placeholder="Your name" [(ngModel)]="name"></ion-input>
-          </ion-item>
-        </ion-content>
-      </ng-template>
-    </ion-modal>
-  </ion-fab-button>
-  
-  </ion-fab>
+<!-- <ion-button expand="full" (click)="openAddModal()">
+  <ion-icon name="add"></ion-icon> Añadir
+</ion-button> -->
 
-  <ion-button id="open-modal" expand="block">Open</ion-button>
-  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
-    <ng-template>
-      <ion-header>  
-        <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-button (click)="cancel()">Cancel</ion-button>
-          </ion-buttons>
-          <ion-title>Welcome</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <ion-item>
-          <ion-label position="stacked">Enter your name</ion-label>
-          <ion-input type="text" placeholder="Your name" [(ngModel)]="name"></ion-input>
-        </ion-item>
-      </ion-content>
-    </ng-template>
-  </ion-modal> -->
+<ion-button id="open-modal" expand="block">Agregar planta</ion-button>
+
+
+
 
 <ion-content>
   <ion-list *ngIf="plantas.length > 0">
@@ -75,39 +33,78 @@
 </ion-content>
 
 
- 
+
 <ion-item>
 
-  
 
-<ion-tabs>
-  <ion-tab-bar slot="bottom">
-    <ion-tab-button  routerLink="/plantas">
-      <ion-icon name="leaf"></ion-icon>
-      Plantas
-    </ion-tab-button>
-    <ion-tab-button routerLink="/enciclopedia">
-      <ion-icon name="book"></ion-icon>
-      Enciclopedia
-    </ion-tab-button>
-    <ion-tab-button >
-      <ion-icon name="settings"></ion-icon>
-      Ajustes
-    </ion-tab-button>
-    <ion-tab-button (click)="logout()" color="tertiary" id="close-toast">
-      <ion-icon name="log-out"></ion-icon>
-      <ion-toast trigger="close-toast" message="Sesión cerrada" [duration]="3000"></ion-toast>
-      Salir
-    </ion-tab-button>
-  </ion-tab-bar>
-</ion-tabs>
+
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button routerLink="/plantas">
+        <ion-icon name="leaf"></ion-icon>
+        Plantas
+      </ion-tab-button>
+      <ion-tab-button routerLink="/enciclopedia">
+        <ion-icon name="book"></ion-icon>
+        Enciclopedia
+      </ion-tab-button>
+      <ion-tab-button>
+        <ion-icon name="settings"></ion-icon>
+        Ajustes
+      </ion-tab-button>
+      <ion-tab-button (click)="logout()" color="tertiary" id="close-toast">
+        <ion-icon name="log-out"></ion-icon>
+        <ion-toast trigger="close-toast" message="Sesión cerrada" [duration]="3000"></ion-toast>
+        Salir
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-item>
 
 
+<ion-modal trigger="open-modal" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+  <ng-template>
+    <div class="content">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>
+            Agregar planta
+          </ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-list>
+        <ion-item>
+          <ion-input [(ngModel)]="nuevaPlanta.imagen" placeholder="Imagen" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input [(ngModel)]="nuevaPlanta.titulo" placeholder="Título" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input [(ngModel)]="nuevaPlanta.humedad" placeholder="Humedad" type="number"></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-button color="light" id="success-toast" (click)="agregarPlanta()" routerLink="/plantas">Agregar
+        <ion-toast trigger="success-toast" message="Planta agregada" [duration]="3000"></ion-toast>
 
+      </ion-button>
+      <!-- <ion-nav [root]="component"></ion-nav> -->
 
+      
+    </div>
+  </ng-template>
+</ion-modal>
 
-<!-- <ion-tab-button tab="plantas" routerLink="plantas">
+<!-- <ion-modal id=IonModal (ionModalDidDismiss)="closeAddModal()">
+  <ion-header>
+    <ion-title>Agregar Elemento</ion-title>
+  </ion-header>
+  <ion-content>
+    Aquí va el formulario
+    <h1>sd</h1>
+  </ion-content>
+</ion-modal> -->
+
+ <!-- <ion-tab-button tab="plantas" routerLink="plantas">
   <ion-icon name="leaf"></ion-icon>
   Plantas
 </ion-tab-button> -->

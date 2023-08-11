@@ -111,6 +111,25 @@ app.get('/Integradora/plantitas', async (req, res) => {
   }
 });
 
+// Ruta para agregar una nueva planta
+app.post('/Integradora/plantitas', async (req, res) => {
+  const { imagen, titulo, humedad } = req.body;
+
+  try {
+    const nuevaPlanta = new PlantitaModel({
+      imagen,
+      titulo,
+      humedad,
+    });
+
+    await nuevaPlanta.save();
+    res.status(200).json({ success: true, message: 'Planta agregada exitosamente' });
+  } catch (error) {
+    console.error('Error al agregar planta:', error);
+    res.status(500).json({ success: false, message: 'Error al agregar planta' });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Servidor en ejecución en http://localhost:${port}`);

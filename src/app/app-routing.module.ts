@@ -34,6 +34,10 @@ const routes: Routes = [
   {
     path: 'enciclopedia',
     loadChildren: () => import('./pages/enciclopedia/enciclopedia.module').then( m => m.EnciclopediaPageModule)
+  },
+  {
+    path: 'mi-modal',
+    loadChildren: () => import('./services/mi-modal/mi-modal.module').then( m => m.MiModalPageModule)
   }
   //,
   // {
