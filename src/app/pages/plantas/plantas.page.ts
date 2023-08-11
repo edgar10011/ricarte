@@ -64,7 +64,7 @@ export class PlantasPage implements OnInit {
 
   async agregarPlanta(){
     try {
-      const url = 'http://localhost:3007/Integradora/agregarPlanta'; // Cambia esta URL según tu API
+      const url = 'http://localhost:3007/Integradora/plantitas'; // Cambia esta URL según tu API
       const response = await this.http.post(url, this.nuevaPlanta).toPromise();
 
       console.log('Planta agregada:', response);
