@@ -38,6 +38,10 @@ const routes: Routes = [
   {
     path: 'mi-modal',
     loadChildren: () => import('./services/mi-modal/mi-modal.module').then( m => m.MiModalPageModule)
+  },
+  {
+    path: 'riego',
+    loadChildren: () => import('./pages/riego/riego.module').then( m => m.RiegoPageModule)
   }
   //,
   // {

@@ -21,7 +21,7 @@
                   </div>
   
                   <form>
-  
+
                     <div class="form-outline mb-4">
                       <label class="form-label" for="form2Example11">Usuario</label>
   
@@ -30,12 +30,19 @@
                     </div>
   
                     <div class="form-outline mb-4">
-                      <label class="form-label" for="form2Example22">Contraseña</label>
-                      <input type="password" [(ngModel)]="password" id="form2Example22" class="form-control" name="password"/>
+                      <label class="form-label" for="password">Contraseña</label>
+                      <input type="password" [(ngModel)]="password" id="password" class="form-control" name="password" />
                     </div>
-  
+                  
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="confirmPassword">Confirmar Contraseña</label>
+                      <input type="password" [(ngModel)]="confirmPassword" id="confirmPassword" class="form-control" name="confirmPassword" />
+                    </div>
+                  
                     <div class="text-center pt-1 mb-5 pb-1">
-                      <button class="btn btn-primary btn-block fa-lg mb-3" type="button" (click)="register()">Registrar</button>
+                      <button class="btn btn-primary btn-block fa-lg mb-3" type="button" id="create-toast" (click)="register()">Registrar</button>
+                        <ion-toast trigger="create-toast" message="Registro exitoso" [duration]="3000"></ion-toast>
+
                       <br>
                     </div>
   

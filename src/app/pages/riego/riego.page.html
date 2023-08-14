@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>riego</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">riego</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-toast trigger="close-toast" message="Sesión cerrada" [duration]="3000"></ion-toast>
+
+
+  <ion-item>
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button routerLink="/plantas">
+          <ion-icon name="leaf"></ion-icon>
+          Plantas
+        </ion-tab-button>
+        <ion-tab-button routerLink="/enciclopedia">
+          <ion-icon name="book"></ion-icon>
+          Enciclopedia
+        </ion-tab-button>
+        <ion-tab-button routerLink="/riego">
+          <ion-icon name="water"></ion-icon>
+          <ion-toast trigger="close-toast" message="Sesión cerrada" [duration]="3000"></ion-toast>
+          Ajustes
+        </ion-tab-button>
+        <ion-tab-button (click)="logout()" color="tertiary" id="close-toast">
+          <ion-icon name="log-out"></ion-icon>
+          Salir
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-item>
+
+</ion-content>
