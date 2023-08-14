@@ -51,7 +51,7 @@ export class PlantasPage implements OnInit {
   }
 
   obtenerPlantas() {
-    this.http.get<Plantita[]>('http://localhost:3007/obtenerPlantas').subscribe(
+    this.http.get<Plantita[]>('http://localhost:3007/Integradora/plantitas').subscribe(
       (data) => {
         console.log(data); // Agrega este console.log() para verificar los datos recibidos
         this.plantas = data;
