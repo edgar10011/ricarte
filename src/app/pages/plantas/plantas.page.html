@@ -5,12 +5,12 @@
     </ion-title>
 
     <ion-fab vertical="top" horizontal="end" expand="block" class="reloadButton" (click)="recargarPagina()">
-        <ion-icon name="reload"></ion-icon>
-   
+      <ion-icon name="reload"></ion-icon>
+
     </ion-fab>
-    
+
   </ion-toolbar>
-  
+
 </ion-header>
 <ion-content>
   <ion-list *ngIf="plantas.length > 0">
@@ -30,12 +30,12 @@
   </div>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end" id="open-modal" expand="block">
-    <ion-fab-button color="light" >
+    <ion-fab-button color="light">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
- 
+
   </ion-fab>
-  
+
 </ion-content>
 <!-- <button type="button" class="btn-add" aria-label="Close"></button> -->
 
@@ -48,7 +48,7 @@
 
 
   <ion-tabs>
-    
+
     <ion-tab-bar slot="bottom">
       <ion-tab-button routerLink="/plantas">
         <ion-icon name="leaf"></ion-icon>
@@ -75,16 +75,11 @@
 <ion-modal trigger="open-modal" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
   <ng-template>
     <div class="content">
-      <!-- <ion-header>
-        <ion-toolbar>
-          <ion-toolbar>
-            <ion-buttons slot="start">
-            </ion-buttons>
-            <ion-title>
-              Agregar planta
-            </ion-title>
-          </ion-toolbar>
-      </ion-header> -->
+      <ion-toolbar>
+        <ion-title>
+          Agregar planta
+        </ion-title>
+      </ion-toolbar>
 
       <ion-list>
 
@@ -103,11 +98,11 @@
         </ion-item> -->
       </ion-list>
       <div class="modalButtons">
-      <ion-button color="success" id="success-toast" (click)="agregarPlanta()" routerLink="/plantas">Agregar
-        <ion-toast trigger="success-toast" message="Planta agregada" [duration]="3000"></ion-toast>
+        <ion-button color="success" id="success-toast" (click)="agregarPlanta()" routerLink="/plantas">Agregar
+          <ion-toast trigger="success-toast" message="Planta agregada" [duration]="3000"></ion-toast>
 
-      </ion-button>
-      <ion-button color="light" (click)="recargarPagina()">Volver</ion-button>
+        </ion-button>
+        <ion-button color="light" (click)="recargarPagina()">Volver</ion-button>
       </div>
 
     </div>
@@ -116,37 +111,43 @@
 
 
 
-<ion-modal *ngFor="let planta of plantas" [trigger]="'edit-modal-' + planta.titulo" [initialBreakpoint]="1"
-  [breakpoints]="[0, 1]">
+<ion-modal trigger="edit-modal" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
   <ng-template>
     <div class="content">
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>
-            Editar planta
-          </ion-title>
-        </ion-toolbar>
-      </ion-header>
+      <ion-buttons slot="start">
+      </ion-buttons>
+      <ion-toolbar>
+        <ion-title>
+          Editar planta
+        </ion-title>
+      </ion-toolbar>
 
       <ion-list>
+
         <ion-item>
           <div class="mb-3">
             <label for="formFileSm" class="form-label">Imagen</label>
-            <input class="form-control form-control-sm" (change)="capturarFile($event)" id="formFileSm" type="file">
+            <input class="form-control form-control-sm" [(ngModel)]="plantaSeleccionada.imagen" (change)="capturarFile($event)" id="formFileSm" type="file">
           </div>
-        </ion-item>
 
+        </ion-item>
         <ion-item>
           <ion-input [(ngModel)]="plantaSeleccionada.titulo" placeholder="Título" type="text"></ion-input>
         </ion-item>
-
-        <!-- Opcional: Si deseas mostrar la humedad -->
         <!-- <ion-item>
-          <ion-input [(ngModel)]="plantaSeleccionada.humedad" placeholder="Humedad" type="number"></ion-input>
+          <ion-input [(ngModel)]="nuevaPlanta.humedad" placeholder="Humedad" type="number"></ion-input>
         </ion-item> -->
       </ion-list>
+      <div class="modalButtons">
+        <ion-button color="success" id="success-toast" (click)="agregarPlanta()" routerLink="/plantas">Editar
+          <ion-toast trigger="success-toast" message="Planta agregada" [duration]="3000"></ion-toast>
 
-      <!-- <ion-button color="light" id="success-toast" (click)="guardarPlanta()">Editar</ion-button> -->
+        </ion-button>
+        <ion-button color="success" (click)="actualizarPlanta()">Actualizar</ion-button>
+
+        
+        <ion-button color="light" (click)="recargarPagina()">Volver</ion-button>
+      </div>
 
     </div>
   </ng-template>

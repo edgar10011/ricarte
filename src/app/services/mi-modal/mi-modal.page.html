@@ -11,3 +11,44 @@
     </ion-toolbar>
   </ion-header>
 </ion-content>
+
+
+<ion-modal trigger="edit-modal" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+  <ng-template>
+    <div class="content">
+      <ion-buttons slot="start">
+      </ion-buttons>
+      <ion-toolbar>
+        <ion-title>
+          Editar planta
+        </ion-title>
+      </ion-toolbar>
+
+      <ion-list>
+
+        <ion-item>
+          <div class="mb-3">
+            <label for="formFileSm" class="form-label">Imagen</label>
+            <input class="form-control form-control-sm" (change)="capturarFile($event)" id="formFileSm" type="file">
+          </div>
+
+        </ion-item>
+        <ion-item>
+          <ion-input [(ngModel)]="nuevaPlanta.titulo" placeholder="Título" type="text"></ion-input>
+        </ion-item>
+        <!-- <ion-item>
+          <ion-input [(ngModel)]="nuevaPlanta.humedad" placeholder="Humedad" type="number"></ion-input>
+        </ion-item> -->
+      </ion-list>
+      <div class="modalButtons">
+        <ion-button color="success" id="success-toast" (click)="agregarPlanta()" routerLink="/plantas">Editar
+          <ion-toast trigger="success-toast" message="Planta agregada" [duration]="3000"></ion-toast>
+
+        </ion-button>
+        
+        <ion-button color="light" (click)="recargarPagina()">Volver</ion-button>
+      </div>
+
+    </div>
+  </ng-template>
+</ion-modal>

@@ -1,15 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/authService';
 import { HttpClient } from '@angular/common/http';
 import { ModalController } from '@ionic/angular';
 import { MiModalPage } from '../../services/mi-modal/mi-modal.page';
 
-
 interface Plantita {
   imagen: string;
   titulo: string;
-  humedad?: number; // Opcional
+  humedad?: number;
+  id:0
 }
 
 @Component({
@@ -23,17 +22,18 @@ export class PlantasPage implements OnInit {
 
   nuevaPlanta: Plantita = {
     imagen: '',
-    titulo: '',
+    id:0,
+    titulo: ''
   };
 
   plantaSeleccionada: Plantita = {
     imagen: '',
     titulo: '',
+    id:0
   };
 
   constructor(
     private router: Router,
-    private authService: AuthService,
     private http: HttpClient,
     private modalController: ModalController
   ) {}
@@ -43,11 +43,10 @@ export class PlantasPage implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
     console.log('Sesión cerrada');
     this.router.navigate(['/login']);
   }
-  
+
   recargarPagina() {
     window.location.reload();
   }
@@ -65,8 +64,9 @@ export class PlantasPage implements OnInit {
   }
 
   capturarFile(event: any) {
-    const archivoCapturado = event.target?.files[0];
+    const archivoCapturado = event.target.files[0];
     if (archivoCapturado) {
+      console.log('Archivo capturado:', archivoCapturado);
       this.archivos.push(archivoCapturado);
     }
   }
@@ -91,11 +91,11 @@ export class PlantasPage implements OnInit {
   }
 
   async convertirABase64(archivo: File): Promise<string> {
-    return new Promise<string>(async (resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       try {
         const reader = new FileReader();
 
-        reader.onload = async (event) => {
+        reader.onload = (event) => {
           if (event.target && event.target.result) {
             resolve(event.target.result as string);
           } else {
@@ -103,24 +103,13 @@ export class PlantasPage implements OnInit {
           }
         };
 
-        reader.onerror = (event) => {
-          //reject(event.target.error || new Error('Error al leer el archivo.'));
-        };
+   
 
         reader.readAsDataURL(archivo);
       } catch (error) {
         reject(error);
       }
     });
-  }
-
-  async openAddModal() {
-    const modal = await this.modalController.create({
-      component: MiModalPage,
-      cssClass: 'my-custom-class',
-    });
-
-    return await modal.present();
   }
 
   async guardarPlanta(url: string) {
@@ -131,10 +120,39 @@ export class PlantasPage implements OnInit {
       this.nuevaPlanta = {
         imagen: '',
         titulo: '',
+        id:0
       };
       this.archivos = [];
     } catch (error) {
       console.error('Error al agregar planta:', error);
     }
   }
+
+  async actualizarPlanta() {
+    try {
+      const id = '64d923a07a58f382aecf547c'; // Asigna el valor adecuado al ID
+      const url = `http://localhost:3007/Integradora/plantitas/${id}`;
+  
+      if (this.archivos.length > 0) {
+        const base64Image = await this.convertirABase64(this.archivos[0]);
+        this.plantaSeleccionada.imagen = base64Image;
+      }
+  
+      const datosActualizados = {
+        titulo: this.plantaSeleccionada.titulo,
+        imagen: this.plantaSeleccionada.imagen,
+        // Agrega otros campos que desees actualizar
+      };
+  
+      const response = await this.http.put(url, datosActualizados).toPromise();
+  
+      await this.obtenerPlantas();
+      await this.modalController.dismiss();
+  
+      console.log('Planta actualizada con éxito', response);
+    } catch (error) {
+      console.error('Error al actualizar la planta:', error);
+    }
+  }
+  
 }

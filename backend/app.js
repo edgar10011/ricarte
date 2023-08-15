@@ -229,6 +229,28 @@ app.patch('/Integradora/plantitas/:id', async (req, res) => {
   }
 });
 
+// Ruta para actualizar los datos de una planta
+// Ruta para actualizar los datos de una planta
+app.put('Integradora/plantitas/64d923a07a58f382aecf547c', async (req, res) => {
+  const plantId = req.params.id;
+  const { imagen, titulo } = req.body;
+
+  try {
+    // Utiliza la función findByIdAndUpdate para actualizar el documento por su _id
+    await PlantitaModel.findByIdAndUpdate(plantId, {
+      imagen,
+      titulo,
+      
+    });
+    res.status(200).json({ success: true, message: 'Planta actualizada exitosamente' });
+  } catch (error) {
+    console.error('Error al actualizar planta:', error);
+    res.status(500).json({ success: false, message: 'Error al actualizar planta' });
+  }
+});
+
+
+
 app.listen(port, () => {
   console.log(`Servidor en ejecución en http://localhost:${port}`);
 });
