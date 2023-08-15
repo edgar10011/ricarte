@@ -1,20 +1,17 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Lista de plantas
+      Mis plantas
     </ion-title>
+
+    <ion-fab vertical="top" horizontal="end" expand="block" class="reloadButton" (click)="recargarPagina()">
+        <ion-icon name="reload"></ion-icon>
+   
+    </ion-fab>
+    
   </ion-toolbar>
+  
 </ion-header>
-
-<!-- <ion-button expand="full" (click)="openAddModal()">
-  <ion-icon name="add"></ion-icon> Añadir
-</ion-button> -->
-
-<ion-button id="open-modal" expand="block">Agregar planta</ion-button>
-
-
-
-
 <ion-content>
   <ion-list *ngIf="plantas.length > 0">
     <ion-card *ngFor="let planta of plantas">
@@ -24,13 +21,25 @@
       <ion-card-content>
         <img [src]="planta.imagen" alt="Imagen de planta">
         <p>Humedad: {{ planta.humedad }}</p>
+        <ion-button id="edit-modal">Editar</ion-button>
       </ion-card-content>
     </ion-card>
   </ion-list>
   <div *ngIf="plantas.length === 0">
     No hay plantas disponibles.
   </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" id="open-modal" expand="block">
+    <ion-fab-button color="light" >
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+ 
+  </ion-fab>
+  
 </ion-content>
+<!-- <button type="button" class="btn-add" aria-label="Close"></button> -->
+
+
 
 
 
@@ -39,6 +48,7 @@
 
 
   <ion-tabs>
+    
     <ion-tab-bar slot="bottom">
       <ion-tab-button routerLink="/plantas">
         <ion-icon name="leaf"></ion-icon>
@@ -65,46 +75,79 @@
 <ion-modal trigger="open-modal" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
   <ng-template>
     <div class="content">
-      <ion-header>
+      <!-- <ion-header>
         <ion-toolbar>
-          <ion-title>
-            Agregar planta
-          </ion-title>
-        </ion-toolbar>
-      </ion-header>
+          <ion-toolbar>
+            <ion-buttons slot="start">
+            </ion-buttons>
+            <ion-title>
+              Agregar planta
+            </ion-title>
+          </ion-toolbar>
+      </ion-header> -->
+
       <ion-list>
+
         <ion-item>
-          <ion-input [(ngModel)]="nuevaPlanta.imagen" placeholder="Imagen" type="text"></ion-input>
+          <div class="mb-3">
+            <label for="formFileSm" class="form-label">Imagen</label>
+            <input class="form-control form-control-sm" (change)="capturarFile($event)" id="formFileSm" type="file">
+          </div>
+
         </ion-item>
         <ion-item>
           <ion-input [(ngModel)]="nuevaPlanta.titulo" placeholder="Título" type="text"></ion-input>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-input [(ngModel)]="nuevaPlanta.humedad" placeholder="Humedad" type="number"></ion-input>
-        </ion-item>
+        </ion-item> -->
       </ion-list>
-      <ion-button color="light" id="success-toast" (click)="agregarPlanta()" routerLink="/plantas">Agregar
+      <div class="modalButtons">
+      <ion-button color="success" id="success-toast" (click)="agregarPlanta()" routerLink="/plantas">Agregar
         <ion-toast trigger="success-toast" message="Planta agregada" [duration]="3000"></ion-toast>
 
       </ion-button>
-      <!-- <ion-nav [root]="component"></ion-nav> -->
+      <ion-button color="light" (click)="recargarPagina()">Volver</ion-button>
+      </div>
 
-      
     </div>
   </ng-template>
 </ion-modal>
 
-<!-- <ion-modal id=IonModal (ionModalDidDismiss)="closeAddModal()">
-  <ion-header>
-    <ion-title>Agregar Elemento</ion-title>
-  </ion-header>
-  <ion-content>
-    Aquí va el formulario
-    <h1>sd</h1>
-  </ion-content>
-</ion-modal> -->
 
- <!-- <ion-tab-button tab="plantas" routerLink="plantas">
-  <ion-icon name="leaf"></ion-icon>
-  Plantas
-</ion-tab-button> -->
+
+<ion-modal *ngFor="let planta of plantas" [trigger]="'edit-modal-' + planta.titulo" [initialBreakpoint]="1"
+  [breakpoints]="[0, 1]">
+  <ng-template>
+    <div class="content">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>
+            Editar planta
+          </ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-list>
+        <ion-item>
+          <div class="mb-3">
+            <label for="formFileSm" class="form-label">Imagen</label>
+            <input class="form-control form-control-sm" (change)="capturarFile($event)" id="formFileSm" type="file">
+          </div>
+        </ion-item>
+
+        <ion-item>
+          <ion-input [(ngModel)]="plantaSeleccionada.titulo" placeholder="Título" type="text"></ion-input>
+        </ion-item>
+
+        <!-- Opcional: Si deseas mostrar la humedad -->
+        <!-- <ion-item>
+          <ion-input [(ngModel)]="plantaSeleccionada.humedad" placeholder="Humedad" type="number"></ion-input>
+        </ion-item> -->
+      </ion-list>
+
+      <!-- <ion-button color="light" id="success-toast" (click)="guardarPlanta()">Editar</ion-button> -->
+
+    </div>
+  </ng-template>
+</ion-modal>

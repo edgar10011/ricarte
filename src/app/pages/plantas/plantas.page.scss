@@ -12,4 +12,87 @@ img{
     max-width: 300px;
     max-height: 200px;
 }
+.file {
+    background-color: #007bff; /* Cambia el color de fondo a tu preferencia */
+    color: transparent;
+    //border: none;
+    padding: 8px 16px;
 
+    color: black;
+    background-color: transparent;
+    font-stretch: 0px;
+    border-radius: 100%;
+    font-size: 50%;
+    text-size-adjust: 0px;
+  }
+  
+.file:hover {
+    background-color: #007bff; /* Cambia el color de fondo a tu preferencia */
+    color: black;
+    //border: none;
+    padding: 8px 16px;
+
+    color: transparent;
+    background-color: transparent;
+    font-stretch: 0px;
+    border-radius: 100%;
+    font-size: 50%;
+    text-size-adjust: 0px;
+  }
+
+
+  .custom-file-button {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .custom-file-button ion-icon {
+    margin-right: 8px;
+  }
+  
+  .custom-file-button:hover {
+    background-color: #2980b9;
+  }
+  
+  .addButton{
+    background-color: rgba(85, 85, 85, 0.1411764706);
+    width: 50px;
+    height: 50px;
+    margin-bottom: 9px;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 30px;
+    display: flex;
+    border-radius: 50px;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+  }
+  .reloadButton{
+    font-size: 24px;
+    padding-top: 5px;
+    padding-right: 8px;
+    :active{
+        color: #c7c7c7;
+        //background-color: #e4e4e4;
+        border-radius: 40px;
+        background-size: 60px;
+    }
+}
+.modalButtons{
+    display: flex;
+    justify-content: space-evenly;
+}
+ion-title{
+    color: rgb(0, 0, 0);
+    font-weight: 450;
+}
