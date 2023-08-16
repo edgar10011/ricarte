@@ -231,23 +231,23 @@ app.patch('/Integradora/plantitas/:id', async (req, res) => {
 
 // Ruta para actualizar los datos de una planta
 // Ruta para actualizar los datos de una planta
-app.put('/Integradora/plantitas/:id', async (req, res) => {
-  const plantId = req.params.id;
-  const { imagen, titulo } = req.body;
+app.put('/Integradora/plantitas/titulo/:titulo', async (req, res) => {
+  const titulo = req.params.titulo;
+  const nuevaInfo = req.body; // Suponiendo que envías la nueva información en el cuerpo de la solicitud
 
   try {
-    // Utiliza la función findByIdAndUpdate para actualizar el documento por su _id
-    await PlantitaModel.findByIdAndUpdate(plantId, {
-      imagen,
-      titulo,
-    });
-
-    res.status(200).json({ success: true, message: 'Planta actualizada exitosamente' });
+    const result = await PlantitaModel.findOneAndUpdate({ titulo: titulo }, nuevaInfo, { new: true });
+    if (result) {
+      res.status(200).json({ success: true, message: 'Planta editada exitosamente', planta: result });
+    } else {
+      res.status(404).json({ success: false, message: 'Planta no encontrada' });
+    }
   } catch (error) {
-    console.error('Error al actualizar planta:', error);
-    res.status(500).json({ success: false, message: 'Error al actualizar planta' });
+    console.error('Error al editar planta:', error);
+    res.status(500).json({ success: false, message: 'Error al editar planta' });
   }
 });
+
 
 app.delete('/Integradora/plantitas/titulo/:titulo', async (req, res) => {
   const titulo = req.params.titulo;

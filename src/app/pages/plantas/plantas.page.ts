@@ -80,17 +80,21 @@ export class PlantasPage implements OnInit {
       if (this.archivos.length > 0) {
         const base64Image = await this.convertirABase64(this.archivos[0]);
         this.nuevaPlanta.imagen = base64Image;
+    
       }
 
       await this.guardarPlanta(url);
+        // Actualizar la lista de plantas después de agregar
+        this.obtenerPlantas();
+
+        window.location.reload();
+
+        this.obtenerPlantas();
     } catch (error) {
       console.error('Error al agregar planta:', error);
     }
   }
 
-  async editarPlanta(planta: Plantita) {
-    this.plantaSeleccionada = planta; // Cargar datos de la planta seleccionada en el modal
-  }
 
   async convertirABase64(archivo: File): Promise<string> {
     return new Promise<string>((resolve, reject) => {
@@ -182,5 +186,9 @@ export class PlantasPage implements OnInit {
           console.error(`Error al eliminar planta con título ${titulo}:`, error);
     }
   }
+
+  
+  
+  
   
 }
