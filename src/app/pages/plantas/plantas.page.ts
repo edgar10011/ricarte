@@ -8,7 +8,7 @@ interface Plantita {
   imagen: string;
   titulo: string;
   humedad?: number;
-  id:0
+  id: string;
 }
 
 @Component({
@@ -22,14 +22,14 @@ export class PlantasPage implements OnInit {
 
   nuevaPlanta: Plantita = {
     imagen: '',
-    id:0,
+    id:'',
     titulo: ''
   };
 
   plantaSeleccionada: Plantita = {
     imagen: '',
     titulo: '',
-    id:0
+    id:''
   };
 
   constructor(
@@ -71,6 +71,8 @@ export class PlantasPage implements OnInit {
     }
   }
 
+
+
   async agregarPlanta() {
     try {
       const url = 'http://localhost:3007/Integradora/plantitas';
@@ -102,9 +104,6 @@ export class PlantasPage implements OnInit {
             reject(new Error('No se pudo leer el archivo.'));
           }
         };
-
-   
-
         reader.readAsDataURL(archivo);
       } catch (error) {
         reject(error);
@@ -120,7 +119,7 @@ export class PlantasPage implements OnInit {
       this.nuevaPlanta = {
         imagen: '',
         titulo: '',
-        id:0
+        id:''
       };
       this.archivos = [];
     } catch (error) {
@@ -130,9 +129,20 @@ export class PlantasPage implements OnInit {
 
   async actualizarPlanta() {
     try {
-      const id = '64d923a07a58f382aecf547c'; // Asigna el valor adecuado al ID
-      const url = `http://localhost:3007/Integradora/plantitas/${id}`;
+       const id = '64d923a07a58f382aecf547c'; // Asigna el valor adecuado al ID
+      const url = `http://localhost:3007/Integradora/plantitas/`;
   
+      // if (this.archivos.length > 0) {
+      //   const base64Image = await this.convertirABase64(this.archivos[0]);
+      //   this.plantaSeleccionada.imagen = base64Image;
+      // }
+  
+      // const datosActualizados = {
+      //   titulo: this.plantaSeleccionada.titulo,
+      //   imagen: this.plantaSeleccionada.imagen,
+      //   // Agrega otros campos que desees actualizar
+      // };
+
       if (this.archivos.length > 0) {
         const base64Image = await this.convertirABase64(this.archivos[0]);
         this.plantaSeleccionada.imagen = base64Image;
@@ -144,6 +154,7 @@ export class PlantasPage implements OnInit {
         // Agrega otros campos que desees actualizar
       };
   
+  
       const response = await this.http.put(url, datosActualizados).toPromise();
   
       await this.obtenerPlantas();
@@ -152,6 +163,23 @@ export class PlantasPage implements OnInit {
       console.log('Planta actualizada con éxito', response);
     } catch (error) {
       console.error('Error al actualizar la planta:', error);
+    }
+  }
+
+  async eliminarPlanta(titulo: string) {
+    try {
+      // const url = `http://localhost:3007/Integradora/plantitas/titulo/${encodeURIComponent(titulo)}`;
+      const url = `http://localhost:3007/Integradora/plantitas/titulo/${titulo}`;
+
+
+      await this.http.delete(url).toPromise();
+      console.log(`Planta con título ${titulo} eliminada`);
+
+
+      // Actualizar la lista de plantas después de la eliminación
+      this.obtenerPlantas();
+    } catch (error) {
+          console.error(`Error al eliminar planta con título ${titulo}:`, error);
     }
   }
   

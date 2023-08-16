@@ -21,10 +21,11 @@
       <ion-card-content>
         <img [src]="planta.imagen" alt="Imagen de planta">
         <p>Humedad: {{ planta.humedad }}</p>
-        <ion-button id="edit-modal">Editar</ion-button>
+        <ion-button (click)="eliminarPlanta(planta.titulo)">Eliminar</ion-button>
       </ion-card-content>
     </ion-card>
   </ion-list>
+  
   <div *ngIf="plantas.length === 0">
     No hay plantas disponibles.
   </div>

@@ -231,7 +231,7 @@ app.patch('/Integradora/plantitas/:id', async (req, res) => {
 
 // Ruta para actualizar los datos de una planta
 // Ruta para actualizar los datos de una planta
-app.put('Integradora/plantitas/64d923a07a58f382aecf547c', async (req, res) => {
+app.put('/Integradora/plantitas/:id', async (req, res) => {
   const plantId = req.params.id;
   const { imagen, titulo } = req.body;
 
@@ -240,14 +240,33 @@ app.put('Integradora/plantitas/64d923a07a58f382aecf547c', async (req, res) => {
     await PlantitaModel.findByIdAndUpdate(plantId, {
       imagen,
       titulo,
-      
     });
+
     res.status(200).json({ success: true, message: 'Planta actualizada exitosamente' });
   } catch (error) {
     console.error('Error al actualizar planta:', error);
     res.status(500).json({ success: false, message: 'Error al actualizar planta' });
   }
 });
+
+app.delete('/Integradora/plantitas/titulo/:titulo', async (req, res) => {
+  const titulo = req.params.titulo;
+
+  try {
+    const result = await PlantitaModel.findOneAndDelete({ titulo: titulo });
+    if (result) {
+      res.status(200).json({ success: true, message: 'Planta eliminada exitosamente' });
+    } else {
+      res.status(404).json({ success: false, message: 'Planta no encontrada' });
+    }
+  } catch (error) {
+    console.error('Error al eliminar planta:', error);
+    res.status(500).json({ success: false, message: 'Error al eliminar planta' });
+  }
+});
+
+
+
 
 
 
