@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { ModalController } from '@ionic/angular';
-import { MiModalPage } from '../../services/mi-modal/mi-modal.page';
+import { ModalController, ToastController } from '@ionic/angular';
 
 interface Plantita {
   imagen: string;
@@ -22,20 +21,23 @@ export class PlantasPage implements OnInit {
 
   nuevaPlanta: Plantita = {
     imagen: '',
-    id:'',
-    titulo: ''
+    id: '',
+    titulo: '',
   };
 
   plantaSeleccionada: Plantita = {
     imagen: '',
     titulo: '',
-    id:''
+    id: '',
   };
+
+  private toastShown: boolean = false;
 
   constructor(
     private router: Router,
     private http: HttpClient,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private toastController: ToastController
   ) {}
 
   ngOnInit() {
@@ -56,6 +58,7 @@ export class PlantasPage implements OnInit {
       (data) => {
         console.log(data);
         this.plantas = data;
+        this.verificarHumedad(data);
       },
       (error) => {
         console.error('Error al obtener plantas de la base de datos:', error);
@@ -71,8 +74,6 @@ export class PlantasPage implements OnInit {
     }
   }
 
-
-
   async agregarPlanta() {
     try {
       const url = 'http://localhost:3007/Integradora/plantitas';
@@ -80,21 +81,18 @@ export class PlantasPage implements OnInit {
       if (this.archivos.length > 0) {
         const base64Image = await this.convertirABase64(this.archivos[0]);
         this.nuevaPlanta.imagen = base64Image;
-    
       }
 
       await this.guardarPlanta(url);
-        // Actualizar la lista de plantas después de agregar
-        this.obtenerPlantas();
+      // Actualizar la lista de plantas después de agregar
+      this.obtenerPlantas();
 
-        window.location.reload();
-
-        this.obtenerPlantas();
+      window.location.reload();
+      this.obtenerPlantas();
     } catch (error) {
       console.error('Error al agregar planta:', error);
     }
   }
-
 
   async convertirABase64(archivo: File): Promise<string> {
     return new Promise<string>((resolve, reject) => {
@@ -123,7 +121,7 @@ export class PlantasPage implements OnInit {
       this.nuevaPlanta = {
         imagen: '',
         titulo: '',
-        id:''
+        id: '',
       };
       this.archivos = [];
     } catch (error) {
@@ -131,64 +129,57 @@ export class PlantasPage implements OnInit {
     }
   }
 
-  async actualizarPlanta() {
-    try {
-       const id = '64d923a07a58f382aecf547c'; // Asigna el valor adecuado al ID
-      const url = `http://localhost:3007/Integradora/plantitas/`;
-  
-      // if (this.archivos.length > 0) {
-      //   const base64Image = await this.convertirABase64(this.archivos[0]);
-      //   this.plantaSeleccionada.imagen = base64Image;
-      // }
-  
-      // const datosActualizados = {
-      //   titulo: this.plantaSeleccionada.titulo,
-      //   imagen: this.plantaSeleccionada.imagen,
-      //   // Agrega otros campos que desees actualizar
-      // };
 
-      if (this.archivos.length > 0) {
-        const base64Image = await this.convertirABase64(this.archivos[0]);
-        this.plantaSeleccionada.imagen = base64Image;
-      }
-  
-      const datosActualizados = {
-        titulo: this.plantaSeleccionada.titulo,
-        imagen: this.plantaSeleccionada.imagen,
-        // Agrega otros campos que desees actualizar
-      };
-  
-  
-      const response = await this.http.put(url, datosActualizados).toPromise();
-  
-      await this.obtenerPlantas();
-      await this.modalController.dismiss();
-  
-      console.log('Planta actualizada con éxito', response);
-    } catch (error) {
-      console.error('Error al actualizar la planta:', error);
-    }
-  }
 
   async eliminarPlanta(titulo: string) {
     try {
-      // const url = `http://localhost:3007/Integradora/plantitas/titulo/${encodeURIComponent(titulo)}`;
       const url = `http://localhost:3007/Integradora/plantitas/titulo/${titulo}`;
-
 
       await this.http.delete(url).toPromise();
       console.log(`Planta con título ${titulo} eliminada`);
 
-
       // Actualizar la lista de plantas después de la eliminación
       this.obtenerPlantas();
     } catch (error) {
-          console.error(`Error al eliminar planta con título ${titulo}:`, error);
+      console.error(`Error al eliminar planta con título ${titulo}:`, error);
     }
   }
 
-  
-  
-  
-  
+  async verificarHumedad(plantas: Plantita[]) {
+    if (plantas.length > 0) {
+      const stored_humidity2 = plantas[0].humedad;
+      if (stored_humidity2 !== undefined && stored_humidity2 !== null) {
+        console.log('Humedad almacenada en la base de datos 2:', stored_humidity2, '%');
+
+        if (stored_humidity2 < 30 && !this.toastShown) {
+          this.presentToast('La humedad del suelo es baja. Iniciando riego...');
+          this.toastShown = true;
+        } else if (stored_humidity2 >= 30) {
+          this.presenteToast('Humedad adecuada. Riego desactivado');
+        }
+      }
+    }
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 3000,
+      position: 'bottom',
+      color: 'danger',
+    });
+
+    toast.present();
+  }
+
+  async presenteToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 3000,
+      position: 'bottom',
+      color: 'success',
+    });
+
+    toast.present();
+  }
 }

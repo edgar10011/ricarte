@@ -38,30 +38,17 @@
   </ion-fab>
 
 </ion-content>
-<!-- <button type="button" class="btn-add" aria-label="Close"></button> -->
-
-
-
-
-
 <ion-item>
 
-
-
   <ion-tabs>
-
     <ion-tab-bar slot="bottom">
       <ion-tab-button routerLink="/plantas">
         <ion-icon name="leaf"></ion-icon>
         Plantas
       </ion-tab-button>
       <ion-tab-button routerLink="/enciclopedia">
-        <ion-icon name="book"></ion-icon>
-        Enciclopedia
-      </ion-tab-button>
-      <ion-tab-button routerLink="/riego">
-        <ion-icon name="water"></ion-icon>
-        Riego
+        <ion-icon name="information-circle"></ion-icon>
+        Consejos
       </ion-tab-button>
       <ion-tab-button (click)="logout()" color="tertiary" id="close-toast">
         <ion-icon name="log-out"></ion-icon>
@@ -94,9 +81,6 @@
         <ion-item>
           <ion-input [(ngModel)]="nuevaPlanta.titulo" placeholder="Título" type="text"></ion-input>
         </ion-item>
-        <!-- <ion-item>
-          <ion-input [(ngModel)]="nuevaPlanta.humedad" placeholder="Humedad" type="number"></ion-input>
-        </ion-item> -->
       </ion-list>
       <div class="modalButtons">
         <ion-button color="success" id="success-toast" (click)="agregarPlanta()" routerLink="/plantas">Agregar
@@ -110,46 +94,3 @@
   </ng-template>
 </ion-modal>
 
-
-
-<ion-modal trigger="edit-modal" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
-  <ng-template>
-    <div class="content">
-      <ion-buttons slot="start">
-      </ion-buttons>
-      <ion-toolbar>
-        <ion-title>
-          Editar planta
-        </ion-title>
-      </ion-toolbar>
-
-      <ion-list>
-
-        <ion-item>
-          <div class="mb-3">
-            <label for="formFileSm" class="form-label">Imagen</label>
-            <input class="form-control form-control-sm" [(ngModel)]="plantaSeleccionada.imagen" (change)="capturarFile($event)" id="formFileSm" type="file">
-          </div>
-
-        </ion-item>
-        <ion-item>
-          <ion-input [(ngModel)]="plantaSeleccionada.titulo" placeholder="Título" type="text"></ion-input>
-        </ion-item>
-        <!-- <ion-item>
-          <ion-input [(ngModel)]="nuevaPlanta.humedad" placeholder="Humedad" type="number"></ion-input>
-        </ion-item> -->
-      </ion-list>
-      <div class="modalButtons">
-        <ion-button color="success" id="success-toast" (click)="agregarPlanta()" routerLink="/plantas">Editar
-          <ion-toast trigger="success-toast" message="Planta agregada" [duration]="3000"></ion-toast>
-
-        </ion-button>
-        <ion-button color="success" (click)="actualizarPlanta()">Actualizar</ion-button>
-
-        
-        <ion-button color="light" (click)="recargarPagina()">Volver</ion-button>
-      </div>
-
-    </div>
-  </ng-template>
-</ion-modal>

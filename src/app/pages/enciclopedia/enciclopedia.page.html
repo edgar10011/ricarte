@@ -1,60 +1,40 @@
 <ion-header>
-
 </ion-header>
 <ion-content [fullscreen]="true" class="ion-padding">
-  <!-- <ion-button (click)="logout()" color="tertiary" class="logoutB" id="close-toast">Salir</ion-button>
-      <ion-button routerLink="/plantas"  color="tertiary" class="logoutB" id="close-toast">Plantas</ion-button> -->
   <ion-toast trigger="close-toast" message="Sesión cerrada" [duration]="3000"></ion-toast>
-  <h1>Enciclopedia de plantas</h1>
+  <h1>Consejos para el Cuidado de Plantas con Sensor de Humedad</h1>
 
-  <h2>Arbol de la abundancia</h2>
-  <img alt="rhino standing near grass"
-    src="https://cdn03.lolaflora.com/bonnygift/kcm44668812-1/XL/arbol-de-la-abundancia-en-maceta-de-ceramica-kcm44668812-1-49702cc999cd4cbd9d6f5ebd66d49f4e.jpg" />
+  <h2>Utilizando el Sensor de Humedad</h2>
   <p>
-    Descripción. La portulacaria afra es una suculenta siempreverde originaria de Sudáfrica.
-    Allí, crece de manera salvaje y sus hojas carnosas son un manjar para elefantes, cabras y rinocerontes.
-    Es una planta “4×4”, ideal para tener en casa por su resiliencia, su fuerza y su facilidad de cultivo.
+    El sensor de humedad es una herramienta valiosa para cuidar tus plantas. Asegúrate de colocar el sensor en el suelo
+    cerca de las raíces de la planta. Monitorea regularmente los valores de humedad para saber cuándo es el momento
+    adecuado para regar. Recuerda que diferentes tipos de plantas tienen diferentes necesidades de humedad.
+  </p>
+  <img src="https://tienda.bricogeek.com/2179-thickbox_default/sensor-de-humedad-del-suelo.jpg" alt="planta con sensor">
+
+  <h2>Diferencia de Riego entre Plantas</h2>
+  <p>
+    Es esencial entender que las plantas tienen diferentes requerimientos de agua. Algunas plantas, como los cactus y
+    suculentas, prefieren suelos secos y requieren menos riego. Otras plantas, como los helechos, necesitan un suelo más
+    húmedo. Investiga las necesidades de cada planta en tu colección y ajusta la frecuencia y cantidad de riego en
+    consecuencia.
   </p>
 
-  <h2>Suculenta</h2>
-  <img alt="brown sea turtle in water"
-    src="https://verdecora.es/blog/wp-content/uploads/2016/01/shutterstock_295962566-compressor-2.jpg" />
+  <h2>Observa y Aprende</h2>
   <p>
-    Las plantas suculentas ​ o crasas son aquellas en las que algún órgano está especializado en el almacenamiento de
-    agua en cantidades mayores que las plantas sin esta adaptación.
-    Estos órganos de reserva tienen una alta proporción de tejido parenquimático.​Sencillas y variadas, muy variadas.
-    El hecho de que ocupen poco espacio y que, además, pueden crecer en casi en cualquier sitio (ya sea en interior o en
-    exterior)
-    convierten a las suculentas en una apuesta genial para tener un pedacito de Naturaleza en casi cualquier espacio.
+    Observa el estado de tus plantas regularmente. Si notas hojas marchitas o amarillentas, puede ser un signo de
+    exceso o falta de agua. Utiliza el sensor de humedad para obtener una lectura precisa del nivel de humedad en el suelo
+    y ajústate según sea necesario. Con el tiempo, desarrollarás una comprensión más profunda de las necesidades
+    individuales de tus plantas.
   </p>
 
-  <h2>Bonsái</h2>
-  <img alt="giraffe sticking its tongue out"
-    src="https://mymodernmet.com/wp/wp-content/uploads/2021/02/bonsai-tree-history-1.jpg" />
+  <h2>Considera el Medio Ambiente</h2>
   <p>
-    El bonsái es una disciplina muy conocida. Consiste en cultivar árboles y arbustos en macetas y controlar sus
-    dimensiones por medio de técnicas como el trasplante,
-    la poda, el alambrado o el pinzado, de forma tal que se mantengan de un tamaño mucho menor al que alcanzarían en
-    circunstancias naturales.
+    El entorno en el que colocas tus plantas también afecta su necesidad de agua. Si las plantas están en un lugar con
+    alta humedad, es posible que necesiten menos riego. Por otro lado, en ambientes más secos, las plantas podrían requerir
+    un riego más frecuente. Mantén un equilibrio y ajusta según las condiciones de tu entorno.
   </p>
-
-  <h2>Lengua de suegra</h2>
-  <img alt="two grey elephants on grass plains during sunset"
-    src="https://huerto-en-casa.com/wp-content/uploads/2022/04/planta-lengua-de-suegra-beneficios.jpg" />
-  <p>
-    Es una planta de bajo cuidado que se conoce por sobrevivir a las sequías, lo que la hace perfecta para los
-    novatos.
-    Aunque prefiere la luz brillante, puede sobrevivir a niveles de luz más bajos.
-  </p>
-
-  <h2>Monstera deliciosa</h2>
-  <img alt="black and white dolphin in water"
-    src="https://plantify.mx/wp-content/uploads/2022/04/Monstera-Deliciosa-Cuidados.jpg" />
-  <p>
-    Monstera deliciosa, llamada comúnmente cerimán o costilla de Adán, es una especie de planta trepadora de la familia
-    Araceae, endémica de selvas tropicales,
-    que se distribuye desde el centro y sur de México hasta el norte de Argentina.
-  </p>
+  <img src="https://thumbs.dreamstime.com/b/%C3%ADcone-da-temperatura-das-plantas-cor-simples-com-elementos-de-vetor-contorno-%C3%ADcones-agricultura-automatizados-para-o-site-ui-e-189609786.jpg" alt="planta alta temperatura">
 </ion-content>
 
 <ion-item>
@@ -65,13 +45,8 @@
         Plantas
       </ion-tab-button>
       <ion-tab-button routerLink="/enciclopedia">
-        <ion-icon name="book"></ion-icon>
-        Enciclopedia
-      </ion-tab-button>
-      <ion-tab-button routerLink="/riego">
-        <ion-icon name="water"></ion-icon>
-        <ion-toast trigger="close-toast" message="Sesión cerrada" [duration]="3000"></ion-toast>
-        Ajustes
+      <ion-icon name="information-circle"></ion-icon>
+        Consejos
       </ion-tab-button>
       <ion-tab-button (click)="logout()" color="tertiary" id="close-toast">
         <ion-icon name="log-out"></ion-icon>
