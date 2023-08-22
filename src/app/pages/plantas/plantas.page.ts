@@ -11,7 +11,6 @@ interface Plantita {
   titulo: string;
   humedad?: number;
   id: string;
-  usuario: string; 
 }
 
 @Component({
@@ -27,14 +26,12 @@ export class PlantasPage implements OnInit {
     imagen: '',
     id: '',
     titulo: '',
-    usuario:''
   };
 
   plantaSeleccionada: Plantita = {
     imagen: '',
     titulo: '',
     id: '',
-    usuario:''
   };
 
   private toastShown: boolean = false;
@@ -140,7 +137,7 @@ export class PlantasPage implements OnInit {
   //   }
   // }
 
-  async agregarPlanta(username: string) {
+  async agregarPlanta() {
     try {
       const url = 'http://localhost:3007/Integradora/plantitas';
   
@@ -188,7 +185,6 @@ export class PlantasPage implements OnInit {
         imagen: '',
         titulo: '',
         id: '',
-        usuario: ''
       };
       this.archivos = [];
     } catch (error) {
