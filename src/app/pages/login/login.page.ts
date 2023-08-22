@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../services/authService';
 import { ToastController } from '@ionic/angular';
 
 interface LoginResponse {
   success: boolean;
   message: string;
+  token: string;
 }
 
 @Component({
@@ -37,6 +39,7 @@ export class LoginPage {
         console.log('Respuesta del servidor:', response);
         if (response.success) {
           console.log('Inicio de sesión con éxito');
+          localStorage.setItem('jwtToken', response.token);
           this.router.navigate(['/plantas']);
         } else {
           

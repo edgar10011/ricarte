@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ModalController, ToastController } from '@ionic/angular';
+import { AuthService } from '../../services/authService' 
+
+
 
 interface Plantita {
   imagen: string;
   titulo: string;
   humedad?: number;
   id: string;
+  usuario: string; 
 }
 
 @Component({
@@ -23,12 +27,14 @@ export class PlantasPage implements OnInit {
     imagen: '',
     id: '',
     titulo: '',
+    usuario:''
   };
 
   plantaSeleccionada: Plantita = {
     imagen: '',
     titulo: '',
     id: '',
+    usuario:''
   };
 
   private toastShown: boolean = false;
@@ -37,6 +43,7 @@ export class PlantasPage implements OnInit {
     private router: Router,
     private http: HttpClient,
     private modalController: ModalController,
+    private authService: AuthService,
     private toastController: ToastController
   ) {}
 
@@ -53,18 +60,57 @@ export class PlantasPage implements OnInit {
     window.location.reload();
   }
 
-  obtenerPlantas() {
-    this.http.get<Plantita[]>('http://localhost:3007/Integradora/plantitas').subscribe(
+  // async obtenerPlantas() {
+  //   this.http.get<Plantita[]>('http://localhost:3007/Integradora/plantitas').subscribe(
+  //     (data) => {
+  //       console.log(data);
+  //       this.plantas = data;
+  //       this.verificarHumedad(data);
+  //     },
+  //     (error) => {
+  //       console.error('Error al obtener plantas de la base de datos:', error);
+  //     }
+  //   );
+  // }
+  async obtenerPlantas() {
+    // Obtener el token de autenticación desde tu servicio de autenticación
+    const authToken = this.authService.getToken(); // Reemplaza con tu lógica real
+  
+    if (!authToken) {
+      console.log('Usuario no autenticado');
+      this.plantas = [];
+      return;
+    }
+  
+    // Configurar los encabezados de la solicitud con el token
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${authToken}`
+    });
+  
+    // Realizar la solicitud HTTP con los encabezados configurados
+    this.http.get<Plantita[]>('http://localhost:3007/Integradora/plantitas', { headers }).subscribe(
       (data) => {
         console.log(data);
-        this.plantas = data;
-        this.verificarHumedad(data);
+        // Filtrar las plantas por el nombre de usuario autenticado
+        const authenticatedUser = this.authService.getAuthenticatedUser(); // Suponiendo que tienes un método para obtener el usuario autenticado
+  
+        if (authenticatedUser) {
+          console.log('Usuario autenticado:', authenticatedUser);
+  
+          this.plantas = data.filter(planta => planta.usuario === authenticatedUser.username);
+          this.verificarHumedad(data);
+        } else {
+          console.log('Usuario no autenticado');
+          this.plantas = [];
+        }
       },
       (error) => {
         console.error('Error al obtener plantas de la base de datos:', error);
       }
     );
   }
+  
+
 
   capturarFile(event: any) {
     const archivoCapturado = event.target.files[0];
@@ -74,25 +120,45 @@ export class PlantasPage implements OnInit {
     }
   }
 
-  async agregarPlanta() {
+  // async agregarPlanta() {
+  //   try {
+  //     const url = 'http://localhost:3007/Integradora/plantitas';
+
+  //     if (this.archivos.length > 0) {
+  //       const base64Image = await this.convertirABase64(this.archivos[0]);
+  //       this.nuevaPlanta.imagen = base64Image;
+  //     }
+
+  //     await this.guardarPlanta(url);
+  //     // Actualizar la lista de plantas después de agregar
+  //     this.obtenerPlantas();
+
+  //     window.location.reload();
+  //     this.obtenerPlantas();
+  //   } catch (error) {
+  //     console.error('Error al agregar planta:', error);
+  //   }
+  // }
+
+  async agregarPlanta(username: string) {
     try {
       const url = 'http://localhost:3007/Integradora/plantitas';
-
+  
       if (this.archivos.length > 0) {
         const base64Image = await this.convertirABase64(this.archivos[0]);
         this.nuevaPlanta.imagen = base64Image;
       }
-
+  
       await this.guardarPlanta(url);
-      // Actualizar la lista de plantas después de agregar
+      // No es necesario llamar obtenerPlantas() aquí, ya que se llama después de agregar
       this.obtenerPlantas();
-
-      window.location.reload();
-      this.obtenerPlantas();
+  
+      // No es necesario recargar la página y llamar obtenerPlantas() nuevamente
     } catch (error) {
       console.error('Error al agregar planta:', error);
     }
   }
+  
 
   async convertirABase64(archivo: File): Promise<string> {
     return new Promise<string>((resolve, reject) => {
@@ -122,6 +188,7 @@ export class PlantasPage implements OnInit {
         imagen: '',
         titulo: '',
         id: '',
+        usuario: ''
       };
       this.archivos = [];
     } catch (error) {

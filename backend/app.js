@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const port = 3007;
@@ -40,6 +41,22 @@ async function authenticateUser(username, password) {
   return false;
 }
 
+function authenticateToken(req, res, next) {
+  const token = req.header('Authorization');
+
+  if (!token) {
+    return res.status(401).json({ error: 'Token no proporcionado' });
+  }
+
+  jwt.verify(token, '3556', (err, user) => {
+    if (err) {
+      return res.status(403).json({ error: 'Token inválido' });
+    }
+    req.user = user; // Asigna el usuario autenticado al objeto req
+    next();
+  });
+}
+
 // Ruta para el registro de usuarios
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
@@ -66,7 +83,8 @@ app.post('/login', async (req, res) => {
     const isAuthenticated = await authenticateUser(username, password);
 
     if (isAuthenticated) {
-      res.status(200).json({ success: true, message: 'Inicio de sesión exitoso' });
+      const token = jwt.sign({ username }, '3556', { expiresIn: '1h' });
+      res.status(200).json({ success: true, message: 'Inicio de sesión exitoso', token });
     } else {
       res.status(401).json({ success: false, message: 'Usuario y/o contraseña incorrecta' });
     }
@@ -76,7 +94,7 @@ app.post('/login', async (req, res) => {
 });
 
 // Ruta para obtener las plantas
-app.get('/Integradora/plantitas', async (req, res) => {
+app.get('/Integradora/plantitas', authenticateToken, async (req, res) => {
   try {
     const plantitas = await PlantitaModel.find();
     res.json(plantitas);
@@ -87,7 +105,8 @@ app.get('/Integradora/plantitas', async (req, res) => {
 });
 
 // Ruta para agregar una nueva planta
-app.post('/Integradora/plantitas', async (req, res) => {
+app.post('/Integradora/plantitas', authenticateToken, async (req, res) => {
+  const authenticatedUser = req.user; // Obtén el usuario autenticado desde el middleware
   const { imagen, titulo, humedad } = req.body;
 
   try {
@@ -95,6 +114,7 @@ app.post('/Integradora/plantitas', async (req, res) => {
       imagen,
       titulo,
       humedad,
+      usuario: authenticatedUser._id // Asigna el usuario autenticado como propietario de la planta
     });
 
     await nuevaPlanta.save();
@@ -104,6 +124,7 @@ app.post('/Integradora/plantitas', async (req, res) => {
     res.status(500).json({ success: false, message: 'Error al agregar planta' });
   }
 });
+
 
 // Ruta para actualizar la humedad de una planta existente
 app.patch('/Integradora/plantitas/:id', async (req, res) => {
