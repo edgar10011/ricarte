@@ -45,11 +45,15 @@ export class PlantasPage implements OnInit {
   ) {}
 
   ngOnInit() {
+     this.obtenerPlantas();
+  }
+  ionViewWillEnter(){
     this.obtenerPlantas();
   }
 
   logout() {
     console.log('Sesión cerrada');
+    localStorage.removeItem('jwtToken')
     this.router.navigate(['/login']);
   }
 
@@ -71,7 +75,7 @@ export class PlantasPage implements OnInit {
   // }
   async obtenerPlantas() {
     // Obtener el token de autenticación desde tu servicio de autenticación
-    const authToken = this.authService.getToken(); // Reemplaza con tu lógica real
+    const authToken = localStorage.getItem('jwtToken');
   
     if (!authToken) {
       console.log('Usuario no autenticado');
@@ -88,18 +92,8 @@ export class PlantasPage implements OnInit {
     this.http.get<Plantita[]>('http://localhost:3007/Integradora/plantitas', { headers }).subscribe(
       (data) => {
         console.log(data);
-        // Filtrar las plantas por el nombre de usuario autenticado
-        const authenticatedUser = this.authService.getAuthenticatedUser(); // Suponiendo que tienes un método para obtener el usuario autenticado
-  
-        if (authenticatedUser) {
-          console.log('Usuario autenticado:', authenticatedUser);
-  
-          this.plantas = data.filter(planta => planta.usuario === authenticatedUser.username);
-          this.verificarHumedad(data);
-        } else {
-          console.log('Usuario no autenticado');
-          this.plantas = [];
-        }
+        this.plantas = data;
+        this.verificarHumedad(data);
       },
       (error) => {
         console.error('Error al obtener plantas de la base de datos:', error);
@@ -178,7 +172,14 @@ export class PlantasPage implements OnInit {
 
   async guardarPlanta(url: string) {
     try {
-      const response = await this.http.post(url, this.nuevaPlanta).toPromise();
+      // const response = await this.http.post(url, this.nuevaPlanta).toPromise();
+
+      // add token to the post request
+      const authToken = localStorage.getItem('jwtToken');
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${authToken}`
+      });
+      const response = await this.http.post(url, this.nuevaPlanta, { headers }).toPromise();
       console.log('Planta agregada:', response);
 
       this.nuevaPlanta = {
@@ -245,4 +246,5 @@ export class PlantasPage implements OnInit {
 
     toast.present();
   }
+ 
 }

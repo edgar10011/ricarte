@@ -24,7 +24,7 @@ export class AuthService {
   // Método para cerrar sesión
   logout() {
     // Eliminar los datos del usuario del almacenamiento local
-    localStorage.removeItem(this.USER_KEY);
+    localStorage.clear;
   }
 
   // Obtener el usuario autenticado desde el almacenamiento local

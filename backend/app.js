@@ -23,6 +23,10 @@ const PlantitaSchema = new mongoose.Schema({
   imagen: String,
   titulo: String,
   humedad: Number,
+  user: {
+    type: mongoose.Schema.Types.String,
+    ref: 'User'
+  }
 });
 
 const PlantitaModel = mongoose.model('Plantita', PlantitaSchema);
@@ -30,7 +34,7 @@ const PlantitaModel = mongoose.model('Plantita', PlantitaSchema);
 app.use(bodyParser.json());
 app.use(cors());
 
-// Método para verificar las credenciales y autenticar al usuario
+// Método para verificar las credenciales y auplantittenticar al usuario
 async function authenticateUser(username, password) {
   const user = await User.findOne({ username });
 
@@ -42,20 +46,24 @@ async function authenticateUser(username, password) {
 }
 
 function authenticateToken(req, res, next) {
-  const token = req.header('Authorization');
-
-  if (!token) {
-    return res.status(401).json({ error: 'Token no proporcionado' });
+  const bearerToken = req.header('Authorization');
+  
+  if (!bearerToken) {
+      return res.status(401).json({ error: 'Token no proporcionado' });
   }
 
+  const token = bearerToken.split(' ')[1];
+
   jwt.verify(token, '3556', (err, user) => {
-    if (err) {
-      return res.status(403).json({ error: 'Token inválido' });
-    }
-    req.user = user; // Asigna el usuario autenticado al objeto req
-    next();
+      if (err) {
+          console.log(err);  // Esto te dará más detalles sobre el error.
+          return res.status(403).json({ error: 'Token inválido' });
+      }
+      req.user = user;
+      next();
   });
 }
+
 
 // Ruta para el registro de usuarios
 app.post('/register', async (req, res) => {
@@ -96,13 +104,16 @@ app.post('/login', async (req, res) => {
 // Ruta para obtener las plantas
 app.get('/Integradora/plantitas', authenticateToken, async (req, res) => {
   try {
-    const plantitas = await PlantitaModel.find();
+    const authenticatedUser = req.user;
+    const plantitas = await PlantitaModel.find({ user: authenticatedUser.username });
     res.json(plantitas);
   } catch (error) {
     console.error('Error al obtener plantitas:', error);
     res.status(500).json({ error: 'Error al obtener plantitas' });
   }
 });
+
+
 
 // Ruta para agregar una nueva planta
 app.post('/Integradora/plantitas', authenticateToken, async (req, res) => {
@@ -114,7 +125,7 @@ app.post('/Integradora/plantitas', authenticateToken, async (req, res) => {
       imagen,
       titulo,
       humedad,
-      usuario: authenticatedUser._id // Asigna el usuario autenticado como propietario de la planta
+      user: authenticatedUser.username,  // Asumiendo que "user" es el nombre del campo en tu esquema
     });
 
     await nuevaPlanta.save();
@@ -124,7 +135,6 @@ app.post('/Integradora/plantitas', authenticateToken, async (req, res) => {
     res.status(500).json({ success: false, message: 'Error al agregar planta' });
   }
 });
-
 
 // Ruta para actualizar la humedad de una planta existente
 app.patch('/Integradora/plantitas/:id', async (req, res) => {
@@ -158,7 +168,6 @@ app.put('/Integradora/plantitas/titulo/:titulo', async (req, res) => {
   }
 });
 
-
 app.delete('/Integradora/plantitas/titulo/:titulo', async (req, res) => {
   const titulo = req.params.titulo;
 
@@ -174,11 +183,6 @@ app.delete('/Integradora/plantitas/titulo/:titulo', async (req, res) => {
     res.status(500).json({ success: false, message: 'Error al eliminar planta' });
   }
 });
-
-
-
-
-
 
 app.listen(port, () => {
   console.log(`Servidor en ejecución en http://localhost:${port}`);

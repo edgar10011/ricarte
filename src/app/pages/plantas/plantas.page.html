@@ -19,7 +19,7 @@
         <ion-card-title>{{ planta.titulo }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <img [src]="planta.imagen" alt="Imagen de planta">
+        <img [src]="planta.imagen" alt="Imagen de planta" class="img-fluid" width="180px" height="200px">
         <p>Humedad: {{ planta.humedad }}</p>
         <ion-button (click)="eliminarPlanta(planta.titulo)">Eliminar</ion-button>
       </ion-card-content>
@@ -53,7 +53,7 @@
       </ion-tab-button>
       <ion-tab-button (click)="logout()" color="tertiary" id="close-toast">
         <ion-icon name="log-out"></ion-icon>
-        <ion-toast trigger="close-toast" message="Sesión cerrada" [duration]="3000"></ion-toast>
+        <ion-toast trigger="close-toast" message="Sesión cerrada"[duration]="3000"></ion-toast>
         Salir
       </ion-tab-button>
     </ion-tab-bar>
